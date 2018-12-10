@@ -27,6 +27,8 @@
 #define CDV_BRIDGE_NAME @"cordova"
 #define CDV_WKWEBVIEW_FILE_URL_LOAD_SELECTOR @"loadFileURL:allowingReadAccessToURL:"
 
+NSString* const CDVPageDidLoadFailNotification = @"CDVPageDidLoadFailNotification";
+
 @interface CDVWKWeakScriptMessageHandler : NSObject <WKScriptMessageHandler>
 
 @property (nonatomic, weak, readonly) id<WKScriptMessageHandler>scriptMessageHandler;
@@ -392,6 +394,8 @@ static void * KVOContext = &KVOContext;
 {
     CDVViewController* vc = (CDVViewController*)self.viewController;
     [CDVUserAgentUtil releaseLock:vc.userAgentLockToken];
+
+    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPageDidLoadFailNotification object:error]];
 
     NSString* message = [NSString stringWithFormat:@"Failed to load webpage with error: %@", [error localizedDescription]];
     NSLog(@"%@", message);

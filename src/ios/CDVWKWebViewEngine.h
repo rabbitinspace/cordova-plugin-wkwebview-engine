@@ -20,6 +20,8 @@
 #import <WebKit/WebKit.h>
 #import <Cordova/CDV.h>
 
+extern NSString* const CDVPageDidLoadFailNotification;
+
 @interface CDVWKWebViewEngine : CDVPlugin <CDVWebViewEngineProtocol, WKScriptMessageHandler, WKNavigationDelegate>
 
 @property (nonatomic, strong, readonly) id <WKUIDelegate> uiDelegate;
